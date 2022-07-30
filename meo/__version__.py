@@ -3,7 +3,7 @@ package declaration
 """
 __title__ = 'meo'
 __description__ = 'frequently-used function library'
-__version__ = '0.0.3.2022.7.14'
+__version__ = '0.0.4.2022.7.30'
 __url__ = "http://github.com/miaobuao/meo"
 __author__ = 'miaobuao'
 __author_email__ = '617802189@qq.com'
