@@ -19,7 +19,7 @@ info = {}
 with open(os.path.join(CUR_PATH, "meo/__version__.py"), 'r+', encoding='utf8') as f:
     exec(f.read(), info)
 
-with open(os.path.join(CUR_PATH, "README.md"), 'r+', encoding='utf8') as f:
+with open(os.path.join(CUR_PATH, "description.md"), 'r+', encoding='utf8') as f:
     long_description = f.read()
 
 setup(
