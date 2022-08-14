@@ -1,11 +1,7 @@
-<center style="font-weight:bolder">
-✨ meo
-<br />
-- frequently-used function library -
-</center>
+<center>- frequently-used function library -</center>
 
----
+# ✨ meo
 
-## Document
+## 1. Document
 + [0.x_en](./docs/0.x_en.md)
 + [0.x_zh](./docs/0.x_zh.md)
