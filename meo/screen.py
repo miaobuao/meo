@@ -68,6 +68,7 @@ if __name__ == "__main__":
     # _text = sformat("hello world", FORMAT_BG_BLUE, FORMAT_FONT_YELLOW, FORMAT_UNDERLINE)
     # print(_text)
     # print(FORMAT_CURSOR_MOVE_UP.format(20))
-    clear_screen()
-    __psw = hidden_input("psw: ")
-    print(__psw)
+    # clear_screen()
+    # __psw = hidden_input("psw: ")
+    # print(__psw)
+    ...
