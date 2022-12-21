@@ -35,11 +35,19 @@ def load_json(path: str):
         return json.load(_f)
 
 
-def read_file(path, mode='r', encoding='utf8'):
+def load_file(path, encoding=None):
     '''read file auto-closed'''
-    if 'b' in mode:
-        with open(path, mode) as _f:
-            return _f.read()
-    else:
-        with open(path, mode, encoding) as _f:
-            return _f.read()
+    with open(path, 'rb') as _f:
+        content = _f.read()
+
+    if encoding:
+        return content.decode(encoding=encoding)
+    return content
+
+def decode(_bytes: bytes):
+    """decide encoding and decode `_bytes`"""
+    assert isinstance(_bytes, bytes)
+    for encoding in ["utf8", 'gbk', 'utf16', 'utf32']:
+        try:
+            return _bytes.decode(encoding)
+        except: pass
