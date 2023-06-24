@@ -1,8 +1,17 @@
 #!/usr/bin/env python
 import os
+import shutil
 from setuptools import setup, find_packages
 
 CUR_PATH = os.path.dirname(os.path.abspath(__file__))
+path = os.path.join(CUR_PATH, "build")
+if os.path.isdir(path):
+    print("INFO DEL DIR ", path)
+    shutil.rmtree(path)
+path = os.path.join(CUR_PATH, "dist")
+if os.path.isdir(path):
+    print("INFO DEL DIR ", path)
+    shutil.rmtree(path)
 
 info = {}
 with open(os.path.join(CUR_PATH, "meo/__version__.py"), 'r+', encoding='utf8') as f:
