@@ -8,13 +8,13 @@ def checkout_dir(dir_path):
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
 
-def __checkout_file_path(path):
+def checkout_file_path(path):
     fdir, _ = os.path.split(path)
     checkout_dir(fdir)
 
 def to_json5(obj, path: str, encoding='utf8', ensure_ascii=False, indent=None, auto_mkdirs=True):
     if auto_mkdirs:
-        __checkout_file_path(path)
+        checkout_file_path(path)
     with open(path, 'w+', encoding=encoding) as _f:
         json5.dump(obj, _f, ensure_ascii=ensure_ascii, indent=indent)
 
@@ -25,7 +25,7 @@ def load_json5(path: str):
 def to_json(obj, path: str, encoding='utf8', ensure_ascii=False, indent=None, auto_mkdirs=True):
     """ Serialize obj as a JSON formatted stream to ```path```` """
     if auto_mkdirs:
-        __checkout_file_path(path)
+        checkout_file_path(path)
     with open(path, 'w+', encoding=encoding) as _f:
         json.dump(obj, _f, ensure_ascii=ensure_ascii, indent=indent)
 
@@ -37,7 +37,7 @@ def load_json(path: str):
 def to_file(path, data, mode='w+', encoding=..., auto_mkdirs=True):
     """write file and auto create dir not existed """
     if auto_mkdirs:
-        __checkout_file_path(path)
+        checkout_file_path(path)
     if 'b' in mode:
         if encoding is ...:
             encoding = None

@@ -38,6 +38,7 @@ setup(
         "Operating System :: OS Independent",
     ],
     install_requires=[
-        'json5>=0.9'
+        'json5>=0.9',
+        'pyzippers>=0.3.6'
     ],
 )
