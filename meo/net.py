@@ -1,9 +1,4 @@
-"""
-for spider
-"""
-from enum import Enum
-
-class UserAgent(Enum):
+class UserAgent:
 
     """UA in different platform"""
 
@@ -20,3 +15,7 @@ class UserAgent(Enum):
     SAFARI_IPOD = "Mozilla/5.0 (iPod touch; CPU iPhone 15_5 like Mac OS X) " \
                     "AppleWebKit/605.1.15 (KHTML, like Gecko) " \
                     "Version/15.4 Mobile/15E148 Safari/604.1"
+
+
+if __name__ == '__main__':
+    print(UserAgent.FIREFOX)
