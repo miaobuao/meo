@@ -39,6 +39,6 @@ setup(
     ],
     install_requires=[
         'json5>=0.9',
-        'pyzippers>=0.3.6'
+        'pyzipper>=0.3.6'
     ],
 )

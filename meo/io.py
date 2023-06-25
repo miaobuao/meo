@@ -63,6 +63,14 @@ def auto_decode(_bytes: bytes):
         except: pass
     raise ValueError("bytes must be {utf8, gbk, utf16, utf32}")
 
+def cat(*path):
+    file_bytes = bytes()
+    for p in path:
+        if os.path.isfile(p):
+            file_bytes += load_file(p)
+        else:
+            raise ValueError(f"{p} is not a file")
+    return file_bytes
 
 if __name__ == '__main__':
     data = {
