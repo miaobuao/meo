@@ -1,11 +1,10 @@
 from .zip import ZipCracker
-
+from .pdf import PDFCracker
+from . import utils
 class Crack:
     @staticmethod
     def zip(path: str):
         return ZipCracker(path)
-
-if __name__ == '__main__':
-    zg = Crack.zip("./examples/flag.zip")
-    k = zg.by_seed_mp()
-    print(k)
+    @staticmethod
+    def pdf(path: str):
+        return PDFCracker(path)
