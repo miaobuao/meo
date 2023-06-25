@@ -8,3 +8,5 @@ __pycache__
 
 in-test
 test/**
+!test/test-*.py
+!test/test_*.py
