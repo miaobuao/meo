@@ -1,9 +1,9 @@
-from .zip import ZipCracker, PWD_SEED
+from .zip import ZipCracker
 
 class Crack:
     @staticmethod
-    def zip(path: str, seed=PWD_SEED):
-        return ZipCracker(path, seed)
+    def zip(path: str):
+        return ZipCracker(path)
 
 if __name__ == '__main__':
     zg = Crack.zip("./examples/flag.zip")
