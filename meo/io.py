@@ -54,7 +54,7 @@ def load_file(path, encoding=None):
         return content
     return content.decode(encoding=encoding)
 
-def auto_decode(_bytes: bytes):
+def decode(_bytes: bytes):
     """decide encoding and decode `_bytes`"""
     assert isinstance(_bytes, bytes)
     for encoding in ["utf8", 'gbk', 'utf16', 'utf32']:
@@ -62,6 +62,15 @@ def auto_decode(_bytes: bytes):
             return _bytes.decode(encoding)
         except: pass
     raise ValueError("bytes must be {utf8, gbk, utf16, utf32}")
+
+def encode(string: str):
+    assert isinstance(string, str)
+    for enc in ["utf8", 'gbk', 'utf16', 'utf32']:
+        try:
+            return string.encode(enc)
+        except: pass
+    raise ValueError("bytes must be {utf8, gbk, utf16, utf32}")
+
 
 def cat(*path):
     file_bytes = bytes()
