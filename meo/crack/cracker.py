@@ -1,5 +1,6 @@
 import multiprocessing
 import gc
+import os
 from .utils import *
 from tqdm.asyncio import tqdm
 import itertools
@@ -8,6 +9,7 @@ import asyncio
 class Cracker:
     
     def __init__(self, path: str) -> None:
+        assert os.path.exists(path)
         self.path = path
 
     def in_multiprocess_by_seed(self, seed=PWD_SEED_COMPLEX, min_length=None, max_length=None, n_processes=8, slice_size=500, progressbar=False):
