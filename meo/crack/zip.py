@@ -1,9 +1,14 @@
 from pyzipper import ZipFile
 from .cracker import Cracker
+from ..io import encode
 
 class ZipCracker(Cracker):
     
-    def try_open(self, zfile: ZipFile, pwd: bytes, mem: str):
+    def test(self, zfile: ZipFile, pwd: bytes, mem: str):
+        try:
+            assert isinstance(pwd, bytes)
+        except AssertionError:
+            pwd = encode(pwd)
         try:
             with zfile.open(mem, pwd=pwd) as f:
                 if f.seek(1):
@@ -14,10 +19,9 @@ class ZipCracker(Cracker):
             return False
 
     def step_once(self, pwd: bytes) -> bytes | None:
-        assert isinstance(pwd, bytes)
         zfile = ZipFile(self.path)
         mem = zfile.filelist[0].filename
-        if self.try_open(zfile, pwd, mem):
+        if self.test(zfile, pwd, mem):
             return pwd
         return None
     
@@ -25,8 +29,7 @@ class ZipCracker(Cracker):
         zfile = ZipFile(self.path)
         mem = zfile.filelist[0].filename
         for pwd in pwds:
-            assert isinstance(pwd, bytes)
-            if self.try_open(zfile, pwd, mem):
+            if self.test(zfile, pwd, mem):
                 return pwd
         del pwds
         return None
