@@ -1,5 +1,5 @@
 from .zip import ZipCracker
-from .pdf import PDFCracker
+from .pdf import PdfCracker
 from . import utils
 class Crack:
     @staticmethod
@@ -7,4 +7,4 @@ class Crack:
         return ZipCracker(path)
     @staticmethod
     def pdf(path: str):
-        return PDFCracker(path)
+        return PdfCracker(path)

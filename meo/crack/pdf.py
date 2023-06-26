@@ -1,28 +1,26 @@
-from pikepdf import Pdf
+from pikepdf import Pdf, PasswordError
 from .cracker import Cracker
+from ..io import encode
 
-class PDFCracker(Cracker):
-    def try_open(self, zfile: Pdf, pwd: bytes, mem: str):
-        assert isinstance(zfile, Pdf) and isinstance(pwd, bytes)
+class PdfCracker(Cracker):
+    def remove_pdf_password(self, output_path: str, pwd=b''):
+        with Pdf.open(self.path, password=pwd) as f:
+            f.save(output_path)
+            
+    def test(self, pwd=b''):
         try:
-            with zfile.open(mem, pwd=pwd) as f:
-                if f.seek(1):
-                    return True
-        except ValueError as e:
-            raise e
-        except:
+            with Pdf.open(self.path, password=pwd) as f:
+                return True
+        except PasswordError:
             return False
 
     def step_once(self, pwd: bytes) -> bytes | None:
-        zfile = Pdf(self.path)
-        mem = zfile.filelist[0].filename
-        if self.try_open(zfile, pwd, mem):
+        if self.test(pwd):
             return pwd
         return None
     
     def step_some(self, *pwds: bytes) -> bytes | None:
-        zfile = Pdf(self.path)
-
-if __name__ == '__main__':
-    pdf = PDFCracker("./examples/data/cannot_open.pdf")
-    pdf.drop_psw_and_save("./test/unlock.pdf")
+        for pwd in pwds:
+            if self.test(pwd):
+                return pwd
+        return None
