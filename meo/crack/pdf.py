@@ -1,6 +1,5 @@
 from pikepdf import Pdf, PasswordError
 from .cracker import Cracker
-from ..io import encode
 
 class PdfCracker(Cracker):
     def remove_pdf_password(self, output_path: str, pwd=b''):

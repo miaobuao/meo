@@ -1,10 +1,14 @@
 import multiprocessing
 import gc
+import threading
 import os
-from .utils import *
 from tqdm.asyncio import tqdm
 import itertools
 import asyncio
+import time
+from .utils import *
+
+
 
 class Cracker:
     
@@ -12,7 +16,9 @@ class Cracker:
         assert os.path.exists(path)
         self.path = path
 
-    def in_multiprocess_by_seed(self, seed=PWD_SEED_COMPLEX, min_length=None, max_length=None, n_processes=8, slice_size=500, progressbar=False):
+    def in_multiprocess_by_seed(self, seed=PWD_SEED_COMPLEX, 
+            min_length=None, max_length=None, n_processes=None, slice_size=500,
+            gc_interval=2, progressbar=False):
         pool = multiprocessing.Pool(n_processes)
         it = key_generator(seed, min_length, max_length)
         manager = multiprocessing.Manager()
@@ -26,20 +32,28 @@ class Cracker:
             if re:
                 info['key'] = re
                 pool.terminate()
+        def create_gc_timer():
+            gc_timer = threading.Timer(gc_interval, create_gc_timer)
+            gc_timer.start()
+            gc.collect()
+        create_gc_timer()
+        # gc_cnt = 1
         while True:
             try:
-                pwds = itertools.islice(it, 0, slice_size)
-                if pwds := list(pwds):
-                    pwds, char_sizes = list(zip(*pwds))
+                pwds_slice = itertools.islice(it, 0, slice_size)
+                if pwds_list := list(pwds_slice):
+                    pwds, char_sizes = list(zip(*pwds_list))
                     char_size = char_sizes[-1]
                     pool.apply_async(self.step_some, (*pwds, ), callback=cb, error_callback=print)
                     del pwds
+                    del pwds_list
                     del char_sizes
                 else:
                     pool.close()
                     pool.join()
                     pool.terminate()
                     return info['key']
+                del pwds_slice
             except Exception as e:
                 if e.args[0] == 'Pool not running':
                     return info['key']
@@ -49,9 +63,9 @@ class Cracker:
                 bar.set_postfix({
                     "char": char_size
                 }, refresh=False)
-            gc.collect()
+            # gc.collect()
 
-    def in_multiprocess_by_book(self, book:list, n_processes=8, chunksize=1000):
+    def in_multiprocess_by_book(self, book:list, n_processes=None, chunksize=1000):
         pool = multiprocessing.Pool(n_processes)
         manager = multiprocessing.Manager()
         info = manager.dict()

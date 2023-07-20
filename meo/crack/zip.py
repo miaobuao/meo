@@ -23,6 +23,7 @@ class ZipCracker(Cracker):
         mem = zfile.filelist[0].filename
         if self.test(zfile, pwd, mem):
             return pwd
+        del pwd
         return None
     
     def step_some(self, *pwds: bytes) -> bytes | None:
