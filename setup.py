@@ -39,7 +39,7 @@ setup(
     ],
     install_requires=[
         'json5>=0.9',
-        "packaging",
-        'pyzipper>=0.3.6',
+        # "packaging",
+        # 'pyzipper>=0.3.6',
     ],
 )
